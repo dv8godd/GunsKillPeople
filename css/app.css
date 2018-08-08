@@ -7,7 +7,6 @@
 /* @import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1"; */
 
 BODY {
-  font-family: 'Montserrat', sans-serif !important;
 }
 
 /*
@@ -45,7 +44,7 @@ BODY {
 {
   /* background-color: #F3754A; */
   /* background-color: #050A43; */
-  background-color: #121F3C;
+  background-color: #B70A00;
 }
 
 .ios .navbar, 
@@ -53,29 +52,21 @@ BODY {
 {
   /* background-color: #F3754A; */
   /* background-color: #050A43; */
-  background-color: #121F3C;
+  background-color: #B70A00;
 }
 
 .md .navbar .title, 
 .navbar.md .title
 {
     /* color: #6699B2; */
-    color: #78B8D1;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    font-weight: 500;
-    letter-spacing: -0.05em;
+    color: #FFFFFF;
 }
 
 .ios .navbar .title, 
 .navbar.ios .title
 {
     /* color: #6699B2; */
-    color: #78B8D1;
-    text-transform: uppercase;
-    font-size: 0.9em;
-    font-weight: 500;
-    letter-spacing: -0.05em;
+    color: #FFFFFF;
 }
 
 .md .navbar a, 
@@ -139,23 +130,16 @@ BODY {
 */
 
 .officeComment .item-title {
-  font-weight: normal !important;
 }
 
 .officeHours UL LI:last-child {
-  display: none !important;
 }
 
 .officeCommentBuffer {
-  height: 40px;
 }
 
 .md .baList .item-text, 
 .ios .baList .item-text {
-  max-height: 400px !important;
-  width: calc(100% - 40px) !important;
-  -webkit-line-clamp: 12 !important;
-  line-clamp: 12 !important;
 }
 
 /*

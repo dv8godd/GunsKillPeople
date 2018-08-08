@@ -1,8 +1,8 @@
 {
-  "name": "Academy Group",
-  "short_name": "Academy",
-  "theme_color": "#F3754A",
-  "background_color": "#F3754A",
+  "name": "Guns Kill People",
+  "short_name": "GKP",
+  "theme_color": "#B70A00",
+  "background_color": "#B70A00",
   "icons": [
     {
       "src": "images/pwa-icon-192x129.png",
