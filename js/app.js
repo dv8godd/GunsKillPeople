@@ -26,9 +26,6 @@ Vue.component('page-rep', {
 Vue.component('page-about', {
   template: '#page-about'
 });
-Vue.component('page-academy', {
-  template: '#page-academy'
-});
 Vue.component('page-form', {
   template: '#page-form'
 });
@@ -116,7 +113,16 @@ new Vue({
       const self = this;
       const app = self.$f7;
       app.request.json(shootingsURL, function (data) {
-        self.shootingsURL = data;
+        self.shootings = data;
+        done();
+      });    
+    },
+    reloadCongress(event, done) {
+      // refreshAudio.play();
+      const self = this;
+      const app = self.$f7;
+      app.request.json(congressURL, function (data) {
+        self.congress = data;
         done();
       });    
     },
