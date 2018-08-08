@@ -119,13 +119,29 @@
                                 
                                 <f7-block-title>{{shooting.year}} Shootings</f7-block-title>
                                 <f7-list>
-                                    <f7-list-item 
+                                    <f7-list-item accordion-item
                                         v-for="(incident, index) in shooting.incidents" 
                                         :title="incident.shootings" 
                                         :header="incident.cleanDate"
                                         :footer="incident.address"
                                         :key="index"
                                         link="#">
+                                        <f7-accordion-content>
+                                            <f7-list>
+                                                <f7-list-item
+                                                    v-for="(rep, index2) in incident.reps"
+                                                    :title="rep.NameFirst+' '+rep.NameLast"
+                                                    :header="'['+rep.Party+'] '+rep.Title"
+                                                    :footer="rep.NRAtext"
+                                                    :class="`nra-${rep.NRADonations}`"
+                                                    link="#"
+                                                    >
+                                                    <f7-icon slot="media" material="person"></f7-icon>
+                                                </f7-list-item>
+
+
+                                            </f7-list>
+                                        </f7-accordion-content>
                                     </f7-list-item>
                                 
                                 

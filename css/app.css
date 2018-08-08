@@ -125,21 +125,12 @@ BODY {
 
 /*
 ######################################
-#  MESSAGES
+#  SHOOTINGS
 ######################################
 */
 
-.officeComment .item-title {
-}
-
-.officeHours UL LI:last-child {
-}
-
-.officeCommentBuffer {
-}
-
-.md .baList .item-text, 
-.ios .baList .item-text {
+.nra-Yes .item-footer {
+  color: #B70A00 !important;
 }
 
 /*
