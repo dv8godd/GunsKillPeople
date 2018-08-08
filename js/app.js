@@ -7,18 +7,17 @@ const shootingsURL = 'https://gunskillpeople-dev.geekpak.com/app-server/index.ph
 // const refreshAudio = new Audio('./refresh.mp3');
 
 // Init Page Components
-Vue.component('page-class', {
-  template: '#page-class',
+Vue.component('page-rep', {
+  template: '#page-rep',
   props: {
-    classID: String
+    contactID: String
   },
   data() {
     const self = this;
-    const classes = self.$root.classes;
-    const thisClass = classes.filter(function(cls) { return cls.classID === self.classID; })[0];
+    const congress = self.$root.congress;
+    const thisRep = congress.reps.filter(function(rep) { return rep.contactID === self.contactID; })[0];
     return {
-      // classID: classes[self.classID],
-      course: thisClass
+      rep: thisRep
     };
   }
 });
@@ -55,30 +54,8 @@ new Vue({
         // App routes
         routes: [
           {
-            path: '/',
-            url: '/',
-            tabs: [
-              {
-                path: '/overview/',
-                id: 'tab1'
-              },
-              {
-                path: '/classes/',
-                id: 'tab1'
-              },
-              {
-                path: '/messages/',
-                id: 'tab1'
-              },
-              {
-                path: '/settings/',
-                id: 'tab1'
-              }
-            ]
-          },
-          {
-            path: '/class/:classID/',
-            component: 'page-class'
+            path: '/rep/:contactID/',
+            component: 'page-rep'
           },
           {
             path: '/devnotes/',

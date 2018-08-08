@@ -36,7 +36,7 @@
     <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-1536x2048.png" media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
     <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-1668x2224.png" media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
     <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-2048x2732.png" media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
-    <title>Academy</title>
+    <title>Guns Kill People</title>
     <link rel="stylesheet" href="css/framework7.min.css"> <!-- modified css -->
     <link rel="stylesheet" href="css/icons.css">
     <link rel="stylesheet" href="css/app.css">
@@ -93,7 +93,7 @@
             <!-- Tabbed Views Wrapper -->
             <f7-views tabs> 
                 
-                <template>
+                <f7-view main>
                     <f7-page :page-content="false">
                         <f7-navbar title="Guns Kill People">
                             <!-- <f7-nav-right v-if="$theme.md">
@@ -134,9 +134,9 @@
                                                     :header="'['+rep.Party+'] '+rep.Title"
                                                     :footer="rep.NRAtext"
                                                     :class="`nra-${rep.NRADonations}`"
-                                                    link="#"
+                                                    :link="'/rep/'+rep.contactID+'/'"
                                                     >
-                                                    <f7-icon slot="media" material="person"></f7-icon>
+                                                    <f7-icon slot="media" material="person" :color="rep.Color"></f7-icon>
                                                 </f7-list-item>
 
 
@@ -163,7 +163,7 @@
                             </f7-tab>
                         </f7-tabs>
                     </f7-page>
-                </template>
+                </f7-view>
 
 
 
@@ -229,77 +229,39 @@
     <!--
      ###############################################
     #                                               #
-    #  TEMPLATE : CLASS PAGE                        #
+    #  TEMPLATE : REP PAGE                         #
     #                                               #
      ###############################################
     -->
 
-    <template id="page-class">
+    <template id="page-rep">
         <f7-page>
-            <f7-navbar :title="course.className" back-link=" "></f7-navbar>
+            <f7-navbar :title="rep.JobTitle+' '+rep.NameFirst+' '+rep.NameLast" back-link=" "></f7-navbar>
+            <f7-block strong>
+                NRA Donations: {{ rep.NRADonations }}<br>
+                NRA Rating: {{ rep.NRARating }}<br>
+                NRA Total ${{ rep.SumNRA }}<br>
+                <br>
+                YouTube: {{ rep.Video }}<br>
+                Instagram: {{ rep.Instagram }}<br>
+                Facebook: {{ rep.Facebook }}<br>
+                Twitter: {{ rep.twitter }}<br>
+                <br>
+                    <f7-list>
+                        <f7-list-item v-for="(address, index) in rep.addresses">
+                            {{ address.LocationSite }}<br>
+                            {{ address.AddressStreet1 }}<br>
+                            {{ address.AddressStreet2 }}<br>
+                            {{ address.AddressCity }}<br>
+                            {{ address.AddressState }}<br>
+                            {{ address.AddressZip }}<br>
+                            {{ address.PhoneLocal }}
 
-            <template v-if="course.total_possible_points != 0">
-                <f7-block-title>Current Grade</f7-block-title>
-                <div style="width: 200px;margin:20px auto 10px auto;">
-                    <f7-gauge
-                        type="circle"
-                        :value="course.score_percentage_float"
-                        :value-text="course.score_percentage + '%'"
-                        :value-text-color="course.score_color"
-                        :border-color="course.score_color"
-                        border-width="15"
-                        border-bg-color="#dddddd"
-                        :label-text="(course.total_score + ' of ' + course.total_possible_points + ' points')"
-                        label-text-color="#555555"
-                        label-font-weight="700"
-                    ></f7-gauge>           
-                </div>
-            </template>
+                        </f7-list-item>
 
-            <template v-if="((course.assignments !== undefined) && (course.assignments.length != 0))">
-                <f7-block-title>Assignments</f7-block-title>
-                <f7-list>
-                    <f7-list-item
-                        v-for="(thisAssignment, key) in course.assignments"
-                        :title="thisAssignment.assignmentName"
-                        :header="thisAssignment.assignmentCategoryName" 
-                        :footer="thisAssignment.assignmentTotalPoints + ' Points Possible'"
-                        :after="thisAssignment.smartDate"
-                        :key="thisAssignment.assignmentID">
-                    </f7-list-item>
-                </f7-list>
-            </template>
+                    </f7-list>
 
-            <template v-if="((course.gradedAssignments !== undefined) && (course.gradedAssignments.length != 0))">
-                <f7-block-title>Graded Assignments</f7-block-title>
-                <f7-list>
-                    <f7-list-item
-                        v-for="(thisAssignment, key) in course.gradedAssignments"
-                        :title="thisAssignment.assignmentName"
-                        :header="thisAssignment.assignmentCategoryName"
-                        :footer="thisAssignment.score + ' of ' + thisAssignment.assignmentTotalPoints + ' Points'" 
-                        :badge="thisAssignment.assignmentPercentage+'%'"
-                        :badge-color="thisAssignment.badgeColor"
-                        :key="thisAssignment.assignmentID">
-                    </f7-list-item>
-                </f7-list>
-            </template>
-
-            <template v-if="((course.beliefAgency !== undefined) && (course.beliefAgency.length != 0))">
-                <f7-block-title>Belief Agency</f7-block-title>
-                <f7-list media-list class="baList">
-                    <f7-list-item
-                        v-for="(thisComment, key) in course.beliefAgency"
-                        :key="thisComment.session">
-                        <f7-badge :color="thisComment.badgeColor" style="float:right;">{{thisComment.rating}}</f7-badge>
-                        <div class="item-text" style="float:left;">{{thisComment.comment}}</div>
-                    </f7-list-item>
-                </f7-list>
-            </template>
-
-
-
-
+            </f7-block>
         </f7-page>
     </template>
 
@@ -316,11 +278,11 @@
         <f7-navbar title="About the App" back-link=" "></f7-navbar>
         <f7-block-title>About the App</f7-block-title>
         <f7-block strong>
-            <!-- <p>You can go <f7-link back>back</f7-link>.</p> -->
-            <p>Mauris posuere sit amet metus id venenatis. Ut ante dolor, tempor nec commodo rutrum, varius at sem. Nullam ac nisi non neque ornare pretium. Nulla mauris mauris, consequat et elementum sit amet, egestas sed orci. In hac habitasse platea dictumst.</p>
-            <p>Fusce eros lectus, accumsan eget mi vel, iaculis tincidunt felis. Nulla tincidunt pharetra sagittis. Fusce in felis eros. Nulla sit amet aliquam lorem, et gravida ipsum. Mauris consectetur nisl non sollicitudin tristique. Praesent vitae metus ac quam rhoncus mattis vel et nisi. Aenean aliquet, felis quis dignissim iaculis, lectus quam tincidunt ligula, et venenatis turpis risus sed lorem. Morbi eu metus elit. Ut vel diam dolor.</p>
-        </f7-block>
-        </f7-page>
+                <!-- <p>You can go <f7-link back>back</f7-link>.</p> -->
+                <p>Mauris posuere sit amet metus id venenatis. Ut ante dolor, tempor nec commodo rutrum, varius at sem. Nullam ac nisi non neque ornare pretium. Nulla mauris mauris, consequat et elementum sit amet, egestas sed orci. In hac habitasse platea dictumst.</p>
+                <p>Fusce eros lectus, accumsan eget mi vel, iaculis tincidunt felis. Nulla tincidunt pharetra sagittis. Fusce in felis eros. Nulla sit amet aliquam lorem, et gravida ipsum. Mauris consectetur nisl non sollicitudin tristique. Praesent vitae metus ac quam rhoncus mattis vel et nisi. Aenean aliquet, felis quis dignissim iaculis, lectus quam tincidunt ligula, et venenatis turpis risus sed lorem. Morbi eu metus elit. Ut vel diam dolor.</p>
+            </f7-block>
+ x            </f7-page>
     </template>
 
     <!--

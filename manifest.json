@@ -5,7 +5,7 @@
   "background_color": "#B70A00",
   "icons": [
     {
-      "src": "images/pwa-icon-192x129.png",
+      "src": "images/pwa-icon-192x192.png",
       "type": "image/png",
       "sizes": "192x192"
     },
