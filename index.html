@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+  <!--
+  Customize this policy to fit your own app's needs. For more guidance, see:
+      https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+  Some notes:
+      * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+      * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+      * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+          * Enable inline JS: add 'unsafe-inline' to default-src
+  -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#2196f3">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- iOS Icons -->
+    <link href="images/apple-touch-icon-57x57.png" sizes="57x57" rel="apple-touch-icon">
+    <link href="images/apple-touch-icon-72x72.npg" sizes="72x72" rel="apple-touch-icon">
+    <link href="images/apple-touch-icon-114x114.png" sizes="114x114" rel="apple-touch-icon">
+    <link href="images/apple-touch-icon-144x144.png" sizes="144x144" rel="apple-touch-icon">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+
+    <!-- iOS Splashscreens-->
+    <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-750x1294.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-1242x2148.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-1536x2048.png" media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-1668x2224.png" media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <link rel="apple-touch-startup-image" href="images/apple-touch-startup-image-2048x2732.png" media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+    <title>Academy</title>
+    <link rel="stylesheet" href="css/framework7.min.css"> <!-- modified css -->
+    <link rel="stylesheet" href="css/icons.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" type="text/css" href="css/addtohomescreen.css">
+    <script src="js/addtohomescreen.min.js"></script>
+    <script type="text/javascript" src="js/inobounce.min.js"></script>
+    <style>
+		.views {
+			height: 100%;
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+			}
+        body {
+            background-color: #f3754a;
+        }
+        #app {
+            display: none;
+        }
+    </style>
+</head>
+<body class="color-theme-orange">
+    <div id="app">
+        <f7-app :params="f7params">
+            <!-- Statusbar -->
+            <f7-statusbar></f7-statusbar>
+
+            <!-- Left Panel -->
+            <f7-panel left reveal>
+                <f7-view id="left-panel-view">
+                    <f7-page>
+                        <f7-navbar title=""></f7-navbar>
+                        <f7-block-title>
+                            <p>Testing Functions</p>
+                        </f7-block-title>
+                        <f7-list>
+                            <f7-list-item link="#" panel-close title="Remove All Experiences" v-on:click="testingRemoveClasses()"></f7-list-item>
+                            <f7-list-item link="#" panel-close title="Remove All Messages" v-on:click="testingDeleteFeedback()"></f7-list-item>
+                        </f7-list>
+                        <f7-block-title>
+                            <p>Test As Student</p>
+                            :{{ student.token }}:
+                        </f7-block-title>
+                        <f7-list>
+                            <f7-list-item name="spoofUser" radio :checked="(student.first == 'Suhry') && (student.last == 'Acosta')" title="Suhry Acosta" footer="EA4p1xFLBwAQXagp4HoYSteSUic92+kDqu3daIwOHbY" v-on:click="testingSetUser('EA4p1xFLBwAQXagp4HoYSteSUic92+kDqu3daIwOHbY')"></f7-list-item>
+                            <f7-list-item name="spoofUser" radio :checked="(student.first == 'Savannah') && (student.last == 'Bowman')" title="Savannah Bowman" footer="xdJZml2rQzU2cim3wNuoxLY5d2UiEkId7qv5a16AULg" v-on:click="testingSetUser('xdJZml2rQzU2cim3wNuoxLY5d2UiEkId7qv5a16AULg')"></f7-list-item>
+                            <f7-list-item name="spoofUser" radio :checked="(student.first == 'Allende') && (student.last == 'Miglietta')" title="Allende Miglietta" footer="IpmBvGHhSw0yMas6FJCpn708aQIs8WdbzrzgO5jqx20" v-on:click="testingSetUser('IpmBvGHhSw0yMas6FJCpn708aQIs8WdbzrzgO5jqx20')"></f7-list-item>
+                            <f7-list-item  name="spoofUser" :checked="(student.first == 'Daniela') && (student.last == 'Morocho')" radio title="Daniela Morocho" footer="ht7BXxhOoTZq5M\/zkfk2b8io0CYbBGU4Fh7tb3U5QUw" v-on:click="testingSetUser('ht7BXxhOoTZq5M\/zkfk2b8io0CYbBGU4Fh7tb3U5QUw')"></f7-list-item>
+                            <f7-list-item  name="spoofUser" :checked="(!student) || (!student.token) || (student.token == '')" radio title="Signed Out" footer="" v-on:click="testingSetUser('')"></f7-list-item>
+                        </f7-list>
+
+                        <f7-block-title>
+                            <p>Development Notes</p>
+                        </f7-block-title>
+                        <f7-list>
+                            <f7-list-item link="/devnotes/" title="View Notes"></f7-list-item>
+                        </f7-list>
+                    </f7-page>
+                </f7-view>
+            </f7-panel>
+
+            <!-- Tabbed Views Wrapper -->
+            <f7-views tabs>
+
+                <!-- Tabbar -->
+                <f7-toolbar tabbar labels no-hairline>
+                    <f7-link icon-ios="f7:home" icon-md="material:home" tab-link="#view-overview" tab-link-active id="tab1"></f7-link>
+                    <f7-link icon-ios="f7:list" icon-md="material:list" tab-link="#view-classes" id="tab2"></f7-link>
+                    <f7-link icon-ios="f7:email" icon-md="material:email" tab-link="#view-messages" id="tab3" :icon-badge="feedback.celebration.length" badge-color="red"></f7-link>
+                    <f7-link icon-ios="f7:settings" icon-md="material:settings" tab-link="#view-settings" id="tab4"></f7-link>
+                </f7-toolbar>
+
+                <!--
+                 ###############################################
+                #                                               #
+                #  OVERVIEW                                     #
+                #                                               #
+                 ###############################################
+                -->
+
+                <f7-view id="view-overview" main tab tab-active>
+                    <f7-page ptr @ptr:refresh="reloadCalendar">
+
+                        <!-- Title Bar -->
+                        <f7-navbar>
+                                <f7-nav-right><img src="./images/cornerLogo.png" width="122" height="25" alt=""></f7-nav-right>
+                                <f7-nav-left><f7-nav-title>Overview</f7-nav-title></f7-nav-left>    
+                        </f7-navbar>
+                    
+                        <!-- No Timeline Available -->
+                        <f7-block style="text-align: center;" v-if="(calendar.done === undefined) || (calendar.now === undefined) || (calendar.today === undefined) || (calendar.next === undefined) || (((calendar.done.length == 0) && (calendar.now.length == 0) && (calendar.today.length == 0) &&(calendar.next.length == 0)))">
+                            <div class="animatedGS"><div class="animatedGhost"></div>
+                            <div class="animatedShadow"></div></div>
+                            <div v-if="(!student) || (!student.token) || (student.token == '')">
+                                <b>You are not signed in.</b><br>
+                                Sign in to retrieve your schedule.<br><br>
+                                <div style="width: 50%;min-width:200px;max-width:350px;margin:0 auto;">
+                                    <f7-button fill big raised login-screen-open="#login-screen">Sign In</f7-button>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <b>You have no schedule.</b><br>
+                                Pull to refresh your schedule.
+                            </div>
+                        </f7-block>
+    
+
+                        <template v-else>                    
+
+                            <f7-block-title>Schedule</f7-block-title>
+
+                            <f7-block>
+                                <p>Welcome, <b>{{student.first}}</b>.<br>
+                                    Today is <b>{{calendar.attendance.dateToday}}</b>.<br>Your schedule is...</p>
+                            </f7-block>    
+
+                            <!-- Timeline -->
+                            <div class="timeline">
+
+                                <!-- Timeline item : Earlier Today -->
+                                <div class="timeline-item" v-if="(calendar.done !== undefined) && (calendar.done.length != 0)">
+                                    <div class="timeline-item-date">Today</div>
+                                    <div class="timeline-item-divider"></div>
+                                    <div class="timeline-item-content">
+                                        <template v-for="(thisCalendar, key) in calendar.done">
+                                            <div class="timeline-item-time"><i>{{ thisCalendar.title }}</i></div>
+                                            <div style="height:1px;"></div>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline item : Now -->
+                                <div class="timeline-item" v-if="(calendar.now !== undefined) && (calendar.now.length != 0)">
+                                    <div class="timeline-item-date">Now</div>
+                                    <div class="timeline-item-divider"></div>
+                                    <div class="timeline-item-content">
+                                        <template v-for="(thisCalendar, key) in calendar.now">
+                                            <div class="timeline-item-time">{{ thisCalendar.cleanTime }}
+                                                <f7-badge color="red"></f7-badge>
+                                            </div>
+                                            <div class="timeline-item"><f7-link :href="'/class/'+thisCalendar.classID+'/'"><b>{{ thisCalendar.title }}</b></f7-link>
+                                                <!-- &nbsp;&nbsp;<f7-badge color="orange">5</f7-badge> -->
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+        
+                                <!-- Timeline item : Lataer Today -->
+                                <div class="timeline-item" v-if="(calendar.today !== undefined) && (calendar.today.length != 0)">
+                                    <div class="timeline-item-date" v-if="(calendar.done.length != 0) && (calendar.now.length != 0)">Up&nbsp;Next</div>
+                                    <div class="timeline-item-date" v-else>Today</div>
+                                    <div class="timeline-item-divider"></div>
+                                    <div class="timeline-item-content">
+                                        <template v-for="(thisCalendar, key) in calendar.today">
+                                            <div class="timeline-item-time">{{ thisCalendar.cleanTime }}
+                                                <f7-badge color="red"></f7-badge>
+                                            </div>
+                                            <div class="timeline-item"><f7-link :href="'/class/'+thisCalendar.classID+'/'"><b>{{ thisCalendar.title }}</b></f7-link>
+                                                <!-- &nbsp;&nbsp;<f7-badge color="orange">5</f7-badge> -->
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+
+                                <!-- Timeline item : Next Day -->
+                                <div class="timeline-item" v-if="(calendar.next !== undefined) && (calendar.next.length != 0)">
+                                    <div class="timeline-item-date">{{ calendar.nextDay }}</div>
+                                    <div class="timeline-item-divider"></div>
+                                    <div class="timeline-item-content">
+                                        <template v-for="(thisCalendar, key) in calendar.next">
+                                            <div class="timeline-item-time">{{ thisCalendar.cleanTime }}</div>
+                                            <div class="timeline-item"><f7-link :href="'/class/'+thisCalendar.classID+'/'"><b>{{ thisCalendar.title }}</b><f7-badge color="red">{{ getAssignmentCount(thisCalendar.classID) }}</f7-badge></f7-link>
+                                                <!-- &nbsp;&nbsp;<f7-badge color="orange">5</f7-badge> -->
+                                            </div>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br>
+
+                            <template v-if="((calendar.nextAssignments !== undefined) && (calendar.nextAssignments.length != 0))">
+                                <f7-block-title>Assignments</f7-block-title>
+                                <f7-list>
+                                    <f7-list-item
+                                        v-for="(thisAssignment, key) in calendar.nextAssignments"
+                                        :title="thisAssignment.assignmentName"
+                                        :footer="thisAssignment.courseName"
+                                        :after="thisAssignment.smartDate" 
+                                        :key="thisAssignment.assignmentID"
+                                        :link="'/class/'+thisAssignment.courseID+'/'">
+                                    </f7-list-item>
+                                </f7-list>
+                            </template>
+
+                            <br>
+
+                            <template v-if="((calendar.attendance !== undefined) && (calendar.attendance.length != 0) && (calendar.attendance.maxSession !== null))">
+                                <f7-block-title>Attendance</f7-block-title>
+                                <f7-block>
+                                    <p>You were <b>{{calendar.attendance.attendanceStatus}}</b> today.<br>Your attendance record so far is...</p>
+                                </f7-block>    
+                                <div style="width: 200px;margin:20px auto 10px auto;">
+                                    <f7-gauge
+                                        type="circle"
+                                        :value="calendar.attendance.avg"
+                                        :value-text="calendar.attendance.avg + '%'"
+                                        :value-text-color="calendar.attendance.score_color"
+                                        :border-color="calendar.attendance.score_color"
+                                        border-width="15"
+                                        border-bg-color="#dddddd"
+                                        :label-text="(calendar.attendance.attendanceCount + ' of ' + calendar.attendance.maxSession + ' days')"
+                                        label-text-color="#555555"
+                                        label-font-weight="700"
+                                    ></f7-gauge><br><br> 
+                                </div>
+                            </template>
+                            <!-- Timeline End -->
+
+                        </template>
+
+                    </f7-page>
+                </f7-view>
+
+                <!--
+                 ###############################################
+                #                                               #
+                #  CLASSES                                      #
+                #                                               #
+                 ###############################################
+                -->
+
+                <f7-view id="view-classes" tab>
+                    <f7-page ptr @ptr:refresh="reloadClasses">
+
+                        <!-- Title Bar -->
+                        <f7-navbar>
+                                <f7-nav-right><img src="./images/cornerLogo.png" width="122" height="25" alt=""></f7-nav-right>
+                                <f7-nav-left><f7-nav-title>Experiences</f7-nav-title></f7-nav-left>    
+                        </f7-navbar>
+
+                        <!-- No Classes Available -->
+                        <f7-block style="text-align: center;" v-if="(classes === undefined) || (classes.length == 0)">
+                            <div class="animatedGS"><div class="animatedGhost"></div>
+                            <div class="animatedShadow"></div></div>
+                            <div v-if="(!student) || (!student.token) || (student.token == '')">
+                                <b>You are not signed in.</b><br>
+                                Sign in to retrieve your experience list.<br><br>
+                                <div style="width: 50%;min-width:200px;max-width:350px;margin:0 auto;">
+                                    <f7-button fill big raised login-screen-open="#login-screen">Sign In</f7-button>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <b>You have no experiences.</b><br>
+                                Pull to refresh your experience list.
+                            </div>
+                        </f7-block>
+    
+                        <!-- Classes -->
+                        <template v-else>
+                            <f7-list media-list style="margin-top: -1px">
+                                <f7-list-item 
+                                    v-for="(thisClass, key) in classes"
+                                    :title="thisClass.className"
+                                    :subtitle="thisClass.class_id" 
+                                    :key="thisClass.classID" 
+                                    :link="'/class/' + thisClass.classID + '/'"
+                                    :badge="thisClass.assignments.length"
+                                    badge-color="orange"></f7-list-item>
+                            </f7-list>
+                        </template>
+                        <!-- Classes End -->
+
+                    </f7-page>
+                </f7-view>
+
+                <!--
+                 ###############################################
+                #                                               #
+                #  MESSAGES                                     #
+                #                                               #
+                 ###############################################
+                -->
+
+                <f7-view id="view-messages" tab>
+                    <f7-page ptr @ptr:refresh="reloadFeedback">
+
+                        <!-- Title Bar -->
+                        <f7-navbar>
+                            <f7-nav-right><img src="./images/cornerLogo.png" width="122" height="25" alt=""></f7-nav-right>
+                            <f7-nav-left><f7-nav-title>Belief / Agency Awards</f7-nav-title></f7-nav-left>    
+                        </f7-navbar>
+
+                        <!-- No Messages Available -->
+                        <f7-block style="text-align: center;" v-if="((feedback.celebration === undefined) || (feedback.celebration.length == 0))">
+                            <div class="animatedGS"><div class="animatedGhost"></div>
+                            <div class="animatedShadow"></div></div>
+                            <div v-if="(!student) || (!student.token) || (student.token == '')">
+                                <b>You are not signed in.</b><br>
+                                Sign in to retrieve your messages list.<br><br>
+                                <div style="width: 50%;min-width:200px;max-width:350px;margin:0 auto;">
+                                    <f7-button fill big raised login-screen-open="#login-screen">Sign In</f7-button>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <b>You have no messages.</b><br>
+                                Pull to refresh your messages list.
+                            </div>
+                        </f7-block>
+
+                        <!-- Messages -->
+                        <template v-else>
+                            <f7-list media-list style="margin-top: -1px">
+                                <f7-list-item accordion-item
+                                    v-for="(thisFeedback, key) in feedback.celebration"
+                                    :title="thisFeedback.HM"
+                                    :after="thisFeedback.dateFormated"
+                                    :subtitle="thisFeedback.teacherFirst + ' ' + thisFeedback.teacherLast" 
+                                    :key="thisFeedback.attendanceID" 
+                                    :link="'/message/' + key + '/'">
+                                    <f7-accordion-content>
+                                        <f7-block>
+                                            <p>{{ thisFeedback.comment }}</p><br>
+                                        </f7-block>
+                                    </f7-accordion-content>
+                                </f7-list-item>
+                            </f7-list>
+
+                            <template v-if="((feedback.officeHours === undefined) || (feedback.officeHours.length == 0))">
+                                <f7-block-title>Office Hours</f7-block-title>
+                                <f7-list media-list class="officeHours">
+                                    <template
+                                        v-for="(thisOffice, key) in feedback.officeHours" >
+                                        <f7-list-item
+                                            :title="thisOffice.courseName"
+                                            :subtitle="thisOffice.hoursTotal + ' minutes'"
+                                            :key="thisOffice.courseID" >
+                                        </f7-list-item>
+                                        <f7-list-item accordion-item class="officeComment"
+                                            v-for="(thisComment, key) in thisOffice.officeComments"
+                                            :title="thisComment.first + ' ' + thisComment.last"
+                                            :after="thisComment.dateFormated"
+                                            :key="thisComment.courseID" >
+                                            <f7-accordion-content>
+                                                <f7-block>
+                                                    <p>{{ thisComment.comment }}</p><br>
+                                                </f7-block>
+                                            </f7-accordion-content>
+                                        </f7-list-item>
+                                        <li class="officeCommentBuffer">&nbsp;</li>
+                                    </template>
+                                </f7-list>
+
+
+                            </template>
+
+
+                        </template>
+                        <!-- Messages End -->
+
+                    </f7-page>
+                </f7-view>
+
+                <!--
+                 ###############################################
+                #                                               #
+                #  SETTINGS                                     #
+                #                                               #
+                 ###############################################
+                -->
+
+                <f7-view id="view-settings" tab>
+                    <f7-page>
+
+                        <!-- Title Bar -->
+                        <f7-navbar>
+                            <f7-nav-right><img src="./images/cornerLogo.png" width="122" height="25" alt=""></f7-nav-right>
+                            <f7-nav-left><f7-nav-title>Settings</f7-nav-title></f7-nav-left>    
+                        </f7-navbar>
+
+
+
+                        <!-- No Timeline Available -->
+                        <f7-block style="text-align: center;" v-if="(!student) || (!student.token) || (student.token == '')">
+                            <div class="animatedGS"><div class="animatedGhost"></div>
+                            <div class="animatedShadow"></div></div>
+                            <div>
+                                <b>You are not signed in.</b><br>
+                                Sign in to get started.<br><br>
+                                <div style="width: 50%;min-width:200px;max-width:350px;margin:0 auto;">
+                                    <f7-button fill big raised login-screen-open="#login-screen">Sign In</f7-button>
+                                </div>
+                            </div>
+                        </f7-block>
+        
+    
+                        <template v-else>
+    
+                            <f7-block-title>Student</f7-block-title>
+                            <f7-list no-hairlines-md>
+                                <f7-list-item
+                                    header="Name"
+                                    :title="student.first+' '+student.last"
+                                ></f7-list-item>
+                                <f7-list-item
+                                    header="School"
+                                    :title="student.schoolName"
+                                ></f7-list-item>
+                                <f7-list-item
+                                    header="Grade"
+                                    :title="student.grade"
+                                ></f7-list-item>
+                            </f7-list>
+                            <f7-block>
+                                    <f7-button fill raised big v-on:click="signOut()">Sign Out</f7-button><br><br>
+                            </f7-block>
+
+                            <f7-block-title>Information</f7-block-title>
+                            <f7-list>
+                                <!-- <f7-list-item link="/about/" title="About the App"></f7-list-item> -->
+                                <f7-list-item link="/academy/" title="About The Academy Group"></f7-list-item>
+                            </f7-list>
+
+                        </template>
+
+                    </f7-page>
+                </f7-view>
+            </f7-views>
+
+            <!--
+             ###############################################
+            #                                               #
+            #  POPUP                                        #
+            #                                               #
+             ###############################################
+            -->
+
+            <f7-popup id="popup">
+                <f7-view>
+                <f7-page>
+                    <f7-navbar title="Welcome!">
+                    <f7-nav-right>
+                        <f7-link popup-close>Close</f7-link>
+                    </f7-nav-right>
+                    </f7-navbar>
+                    <f7-block>
+                        <h3>Welcome to The Academy Group App</h3>
+                        <p>Mauris posuere sit amet metus id venenatis. Ut ante dolor, tempor nec commodo rutrum, varius at sem. Nullam ac nisi non neque ornare pretium. Nulla mauris mauris, consequat et elementum sit amet, egestas sed orci. In hac habitasse platea dictumst.</p>
+                    </f7-block>
+                </f7-page>
+                </f7-view>
+            </f7-popup>
+
+            <!--
+             ###############################################
+            #                                               #
+            #  LOGIN SCREEN                                 #
+            #                                               #
+             ###############################################
+            -->
+
+            <f7-login-screen id="login-screen">
+                <f7-view>
+                <f7-page login-screen>
+                    <f7-login-screen-title>Sign In</f7-login-screen-title>
+                    <f7-list form>
+                    <f7-list-item>
+                        <f7-label>Email Address</f7-label>
+                        <f7-input name="email" placeholder="Email" type="email" @input="loginEmail = $event.target.value"></f7-input>
+                    </f7-list-item>
+                    <f7-list-item>
+                        <f7-label>Password</f7-label>
+                        <f7-input name="password" type="password" placeholder="Password" @input="loginPassword = $event.target.value"></f7-input>
+                    </f7-list-item>
+                    </f7-list>
+                    <f7-list>
+                        <f7-list-button title="Sign In" @click="userLogin()"></f7-list-button>
+                    </f7-list>
+                </f7-page>
+                </f7-view>
+            </f7-login-screen>
+        </f7-app>
+    </div>    
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : CLASS PAGE                        #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-class">
+        <f7-page>
+            <f7-navbar :title="course.className" back-link=" "></f7-navbar>
+
+            <template v-if="course.total_possible_points != 0">
+                <f7-block-title>Current Grade</f7-block-title>
+                <div style="width: 200px;margin:20px auto 10px auto;">
+                    <f7-gauge
+                        type="circle"
+                        :value="course.score_percentage_float"
+                        :value-text="course.score_percentage + '%'"
+                        :value-text-color="course.score_color"
+                        :border-color="course.score_color"
+                        border-width="15"
+                        border-bg-color="#dddddd"
+                        :label-text="(course.total_score + ' of ' + course.total_possible_points + ' points')"
+                        label-text-color="#555555"
+                        label-font-weight="700"
+                    ></f7-gauge>           
+                </div>
+            </template>
+
+            <template v-if="((course.assignments !== undefined) && (course.assignments.length != 0))">
+                <f7-block-title>Assignments</f7-block-title>
+                <f7-list>
+                    <f7-list-item
+                        v-for="(thisAssignment, key) in course.assignments"
+                        :title="thisAssignment.assignmentName"
+                        :header="thisAssignment.assignmentCategoryName" 
+                        :footer="thisAssignment.assignmentTotalPoints + ' Points Possible'"
+                        :after="thisAssignment.smartDate"
+                        :key="thisAssignment.assignmentID">
+                    </f7-list-item>
+                </f7-list>
+            </template>
+
+            <template v-if="((course.gradedAssignments !== undefined) && (course.gradedAssignments.length != 0))">
+                <f7-block-title>Graded Assignments</f7-block-title>
+                <f7-list>
+                    <f7-list-item
+                        v-for="(thisAssignment, key) in course.gradedAssignments"
+                        :title="thisAssignment.assignmentName"
+                        :header="thisAssignment.assignmentCategoryName"
+                        :footer="thisAssignment.score + ' of ' + thisAssignment.assignmentTotalPoints + ' Points'" 
+                        :badge="thisAssignment.assignmentPercentage+'%'"
+                        :badge-color="thisAssignment.badgeColor"
+                        :key="thisAssignment.assignmentID">
+                    </f7-list-item>
+                </f7-list>
+            </template>
+
+            <template v-if="((course.beliefAgency !== undefined) && (course.beliefAgency.length != 0))">
+                <f7-block-title>Belief Agency</f7-block-title>
+                <f7-list media-list class="baList">
+                    <f7-list-item
+                        v-for="(thisComment, key) in course.beliefAgency"
+                        :key="thisComment.session">
+                        <f7-badge :color="thisComment.badgeColor" style="float:right;">{{thisComment.rating}}</f7-badge>
+                        <div class="item-text" style="float:left;">{{thisComment.comment}}</div>
+                    </f7-list-item>
+                </f7-list>
+            </template>
+
+
+
+
+        </f7-page>
+    </template>
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : ABOUT PAGE                        #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-about">
+        <f7-page>
+        <f7-navbar title="About the App" back-link=" "></f7-navbar>
+        <f7-block-title>About the App</f7-block-title>
+        <f7-block strong>
+            <!-- <p>You can go <f7-link back>back</f7-link>.</p> -->
+            <p>Mauris posuere sit amet metus id venenatis. Ut ante dolor, tempor nec commodo rutrum, varius at sem. Nullam ac nisi non neque ornare pretium. Nulla mauris mauris, consequat et elementum sit amet, egestas sed orci. In hac habitasse platea dictumst.</p>
+            <p>Fusce eros lectus, accumsan eget mi vel, iaculis tincidunt felis. Nulla tincidunt pharetra sagittis. Fusce in felis eros. Nulla sit amet aliquam lorem, et gravida ipsum. Mauris consectetur nisl non sollicitudin tristique. Praesent vitae metus ac quam rhoncus mattis vel et nisi. Aenean aliquet, felis quis dignissim iaculis, lectus quam tincidunt ligula, et venenatis turpis risus sed lorem. Morbi eu metus elit. Ut vel diam dolor.</p>
+        </f7-block>
+        </f7-page>
+    </template>
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : ABOUT THE ACADEMY GROUP PAGE      #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-academy">
+        <f7-page>
+            <f7-navbar title="The Academy Group" back-link=" "></f7-navbar>
+            <f7-block-title>About The Academy Group</f7-block-title>
+            <f7-block strong>
+                <p>The Academy Group is a unique social enterprise that leverages earned revenue from financial investments to create world-class opportunities for young people from the nation’s most resilient communities. Our programming affords students the exposure, access and acumen they will need to ascend to the highest levels of leadership in business and society.</p>
+            </f7-block>
+            <f7-block-title>Get In Touch</f7-block-title>
+            <f7-list>
+                <f7-list-item header="Website" title="theacademygroup.com" external link="http://theacademygroup.com"></f7-list-item>
+                <f7-list-item header="Email" title="info@theacademy.group" external link="mailto:info@theacademy.group"></f7-list-item>
+                <f7-list-item header="Telephone" title="312.964.0041" external link="tel:00443129640041"></f7-list-item>
+            </f7-list>        
+        </f7-page>
+    </template>
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : FORM PAGE                         #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-form">
+        <f7-page>
+        </f7-page>
+    </template>
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : DYNAMIC ROUTING PAGE              #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-dynamic-routing">
+        <f7-page>
+        </f7-page>
+    </template>
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : PAGE NOT FOUND                    #
+    #                                               #
+     ###############################################
+    -->
+    <template id="page-not-found">
+        <f7-page>
+        <f7-navbar title="Not found" back-link=" "></f7-navbar>
+        <f7-block strong>
+            <p>Sorry</p>
+            <p>Requested content not found.</p>
+        </f7-block>
+        </f7-page>
+    </template>
+
+    <!-- Cordova -->
+    <!--
+    <script src="cordova.js"></script>
+    -->
+    <!-- Framework7 library -->
+    <script src="js/framework7.min.js"></script>
+    <!-- Vue -->
+    <script src="js/vue.min.js"></script>
+    <!-- Framework7-Vue plugin -->
+    <script src="js/framework7-vue.min.js"></script>
+    <!-- Your custom app scripts -->
+    <script src="js/app.js"></script>
+</body>
+</html>

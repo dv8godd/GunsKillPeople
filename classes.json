@@ -1,0 +1,150 @@
+[
+    {
+        "assignments" : 
+        [
+            {
+                "assignmentCategoryID" : "18",
+                "assignmentCategoryName" : "Weekly Advisory Competencies",
+                "assignmentCategoryWeight" : "100",
+                "assignmentDate" : "",
+                "assignmentID" : "45",
+                "assignmentName" : "Advisory Week 2",
+                "assignmentTotalPoints" : "4",
+                "learningGoalID" : "12",
+                "learningGoalName" : "Advisory Competencies",
+                "score" : ""
+            },
+            {
+                "assignmentCategoryID" : "18",
+                "assignmentCategoryName" : "Weekly Advisory Competencies",
+                "assignmentCategoryWeight" : "100",
+                "assignmentDate" : "",
+                "assignmentID" : "46",
+                "assignmentName" : "Advisory Week 3",
+                "assignmentTotalPoints" : "4",
+                "learningGoalID" : "12",
+                "learningGoalName" : "Advisory Competencies",
+                "score" : ""
+            },
+            {
+                "assignmentCategoryID" : "18",
+                "assignmentCategoryName" : "Weekly Advisory Competencies",
+                "assignmentCategoryWeight" : "100",
+                "assignmentDate" : "",
+                "assignmentID" : "47",
+                "assignmentName" : "Advisory Week 4",
+                "assignmentTotalPoints" : "4",
+                "learningGoalID" : "12",
+                "learningGoalName" : "Advisory Competencies",
+                "score" : ""
+            },
+            {
+                "assignmentCategoryID" : "18",
+                "assignmentCategoryName" : "Weekly Advisory Competencies",
+                "assignmentCategoryWeight" : "100",
+                "assignmentDate" : "",
+                "assignmentID" : "48",
+                "assignmentName" : "Advisory Week 5",
+                "assignmentTotalPoints" : "4",
+                "learningGoalID" : "12",
+                "learningGoalName" : "Advisory Competencies",
+                "score" : ""
+            },
+            {
+                "assignmentCategoryID" : "18",
+                "assignmentCategoryName" : "Weekly Advisory Competencies",
+                "assignmentCategoryWeight" : "100",
+                "assignmentDate" : "6/14/2018",
+                "assignmentID" : "41",
+                "assignmentName" : "Advisory Week 1",
+                "assignmentTotalPoints" : "4",
+                "learningGoalID" : "12",
+                "learningGoalName" : "Advisory Competencies",
+                "score" : ""
+            }
+        ],
+        "classID" : "45",
+        "className" : "Advisory - A15",
+        "class_id" : "",
+        "in_session" : "1",
+        "subject_id" : ""
+    },
+    {
+        "assignments" : 
+        [
+            {
+                "assignmentCategoryID" : "15",
+                "assignmentCategoryName" : "Excellence",
+                "assignmentCategoryWeight" : "50",
+                "assignmentDate" : "11/10/2018",
+                "assignmentID" : "38",
+                "assignmentName" : "Very Important Project",
+                "assignmentTotalPoints" : "50",
+                "learningGoalID" : "8",
+                "learningGoalName" : "Football",
+                "score" : ""
+            }
+        ],
+        "classID" : "14",
+        "className" : "Justice - 4A2",
+        "class_id" : "",
+        "in_session" : "1",
+        "subject_id" : ""
+    },
+    {
+        "assignments" : 
+        [
+            {
+                "assignmentCategoryID" : "4",
+                "assignmentCategoryName" : "Quiz",
+                "assignmentCategoryWeight" : "7",
+                "assignmentDate" : "",
+                "assignmentID" : "42",
+                "assignmentName" : "History Quiz",
+                "assignmentTotalPoints" : "10",
+                "learningGoalID" : "1",
+                "learningGoalName" : "Excellence",
+                "score" : "4"
+            }
+        ],
+        "classID" : "1",
+        "className" : "Justice 101 Advisory",
+        "class_id" : "JUST101 ",
+        "in_session" : "1",
+        "subject_id" : ""
+    },
+    {
+        "assignments" : 
+        [
+            {
+                "assignmentCategoryID" : "16",
+                "assignmentCategoryName" : "Daily Assignment",
+                "assignmentCategoryWeight" : "40",
+                "assignmentDate" : "",
+                "assignmentID" : "49",
+                "assignmentName" : "Day 1 Assignment",
+                "assignmentTotalPoints" : "10",
+                "learningGoalID" : "9",
+                "learningGoalName" : "RI1",
+                "score" : ""
+            },
+            {
+                "assignmentCategoryID" : "16",
+                "assignmentCategoryName" : "Daily Assignment",
+                "assignmentCategoryWeight" : "40",
+                "assignmentDate" : "",
+                "assignmentID" : "50",
+                "assignmentName" : "Day 2 Assignment ",
+                "assignmentTotalPoints" : "10",
+                "learningGoalID" : "9",
+                "learningGoalName" : "RI1",
+                "score" : ""
+            }
+        ],
+        "classID" : "10",
+        "className" : "Literacy - 4B2",
+        "class_id" : "",
+        "in_session" : "1",
+        "subject_id" : ""
+    }
+]

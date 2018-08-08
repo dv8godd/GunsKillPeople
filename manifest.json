@@ -1,0 +1,22 @@
+{
+  "name": "Academy Group",
+  "short_name": "Academy",
+  "theme_color": "#F3754A",
+  "background_color": "#F3754A",
+  "icons": [
+    {
+      "src": "images/pwa-icon-192x129.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/pwa-icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "display": "standalone",
+  "orientation": "portrait",
+  "scope": "/",
+  "start_url": "index.html"
+}
