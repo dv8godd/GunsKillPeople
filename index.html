@@ -229,7 +229,7 @@
     <!--
      ###############################################
     #                                               #
-    #  TEMPLATE : REP PAGE                         #
+    #  TEMPLATE : REP PAGE                          #
     #                                               #
      ###############################################
     -->
@@ -237,32 +237,66 @@
     <template id="page-rep">
         <f7-page>
             <f7-navbar :title="rep.JobTitle+' '+rep.NameFirst+' '+rep.NameLast" back-link=" "></f7-navbar>
+            <f7-block-title>
+                NRA Scorecard
+            </f7-block-title>
+
             <f7-block strong>
-                NRA Donations: {{ rep.NRADonations }}<br>
-                NRA Rating: {{ rep.NRARating }}<br>
-                NRA Total ${{ rep.SumNRA }}<br>
-                <br>
-                YouTube: {{ rep.Video }}<br>
-                Instagram: {{ rep.Instagram }}<br>
-                Facebook: {{ rep.Facebook }}<br>
-                Twitter: {{ rep.twitter }}<br>
-                <br>
-                    <f7-list>
-                        <f7-list-item v-for="(address, index) in rep.addresses">
-                            {{ address.LocationSite }}<br>
-                            {{ address.AddressStreet1 }}<br>
-                            {{ address.AddressStreet2 }}<br>
-                            {{ address.AddressCity }}<br>
-                            {{ address.AddressState }}<br>
-                            {{ address.AddressZip }}<br>
-                            {{ address.PhoneLocal }}
-
-                        </f7-list-item>
-
-                    </f7-list>
-
+                <b>Accepts NRA Donations:</b> {{ rep.NRADonations }}<br>
+                <template v-if="rep.NRARating != null">
+                    <b>NRA Rating:</b> {{ rep.NRARating }}<br>
+                </template>
+                <template v-if="rep.SumNRA != null">
+                    <b>Total of Accepted NRA Donations:</b> ${{ rep.SumNRA }}<br>
+                </template>
             </f7-block>
-        </f7-page>
+
+            <template v-if="(rep.Facebook != null) || (rep.twitter != null) || (rep.Instagram != null) || (rep.Video != null)">
+                <f7-block-title>
+                    Social Media
+                </f7-block-title>
+                <f7-block strong>
+                    <template v-if="rep.Facebook != null">
+                        <f7-link icon-f7="social_facebook_fill" :href="rep.Facebook" target="_blank"></f7-link>&nbsp;&nbsp;&nbsp;
+                    </template>
+                    <template v-if="rep.twitter != null">
+                        <f7-link icon-f7="social_twitter_fill" :href="rep.twitter" target="_blank"></f7-link>&nbsp;&nbsp;&nbsp;
+                    </template>
+                    <template v-if="rep.Instagram != null">
+                        <f7-link icon-f7="social_instagram_fill" :href="rep.Instagram" target="_blank"></f7-link>&nbsp;&nbsp;&nbsp;
+                    </template>
+                    <template v-if="rep.Video != null">
+                        <f7-link icon-f7="videocam_fill" :href="rep.Video" target="_blank"></f7-link>
+                    </template>
+                </f7-block> 
+            </template>
+                            
+            <f7-list>
+                <f7-template v-for="(address, index) in rep.addresses">
+                    <f7-block-title>
+                        {{ address.OfficeActivity }}
+                        <template v-if="address.LocationSite != null">
+                            {{ address.LocationSite }}<br>
+                        </template>
+                    </f7-block-title>
+                    <f7-block strong>      
+                        {{ address.AddressStreet1 }}<br>
+                        <template v-if="address.AddressStreet2 != null">
+                            {{ address.AddressStreet2 }}<br>
+                        </template>
+                        {{ address.AddressCSZ }}
+                        <template v-if="address.PhoneLocal != null">
+                            <br><br>
+                            <f7-link 
+                                icon-f7="phone_round_fill" 
+                                :href="address.PhoneLocal" 
+                                target="_blank">&nbsp;{{ address.PhoneLocal }}</f7-link>
+                        </template>
+                </f7-block>
+                </f7-template>
+
+            </f7-list>
+    </f7-page>
     </template>
 
     <!--
