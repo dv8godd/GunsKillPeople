@@ -6,12 +6,8 @@ header("Access-Control-Allow-Origin: *");
 header("content-type: application/json");
 
 
-// Database & encryption connection setup
-$servername = "localhost";
-$dbusername = "<<<< change me >>>>";
-$dbpassword = "<<<< change me >>>>";
-$dbname = "gunsKillPeople";
-
+// Database connection setup
+include_once "configuration.php";
 
 // Set some variables
 $func = isset($_GET['func']) ? $_GET['func'] : '';
@@ -94,10 +90,14 @@ EOF;
 SELECT
 shootings,
 DATE_FORMAT(date, '%b %D, %Y') as cleanDate,
-address,
-summary,
-`type of weapons` AS typeOfWeapons,
-__pk_location AS locationID
+Address,
+Summary,
+fatalities,
+totalVictims,
+typeOfWeapons,
+latitude,
+longitude,
+__pk_location
 FROM
 SQLShootings
 WHERE year='{$thisYear}'
@@ -121,7 +121,7 @@ EOF;
                 foreach ($dataset[$key]['incidents'] as $key2 => $rowData2) {
 
                     // grab the classID for the sub-query
-                    $thisLocation = $rowData2['locationID'];
+                    $thisLocation = $rowData2['__pk_location'];
 
 
 
@@ -131,7 +131,7 @@ EOF;
 
                     $sql = <<<EOF
 SELECT
-c.__pk_contact AS contactID,
+c.__pk_contact,
 c.NameFirst,
 c.NameLast,
 c.Party,
@@ -208,21 +208,26 @@ EOF;
     // Set the query with Heredoc (<<<EOF to EOF;) syntax
     $sql = <<<EOF
 SELECT
-__pk_contact AS contactID,
+__pk_contact,
 NameFirst,
 NameLast,
 JobTitle,
 Party,
+PartyAffiliation,
 NRADonations,
 NRARating,
 FORMAT(SumNRA,0) AS SumNRA,
+Website,
 Facebook,
 twitter,
 Instagram,
-Video
+Video,
+ElectionYear,
+Notes,
+Position
 FROM SQLContacts
-GROUP BY contactID
-ORDER BY contactID ASC
+GROUP BY __pk_contact
+ORDER BY __pk_contact ASC
 EOF;
 
     // Run query
@@ -242,7 +247,7 @@ EOF;
         foreach ($dataset['reps'] as $key => $rowData) {
 
             // grab the classID for the sub-query
-            $thisRepID = $rowData['contactID'];
+            $thisRepID = $rowData['__pk_contact'];
 
             // Setting the sub-query with Heredoc (<<<EOF to EOF;) syntax
             $sql = <<<EOF
@@ -250,6 +255,7 @@ EOF;
 SELECT 
 LocationSite,
 PhoneLocal,
+CONCAT('tel:+1',TRIM(REPLACE(REPLACE(REPLACE(REPLACE(PhoneLocal,'(',''),'-',''),')',''),' ',''))) AS PhoneLink,
 OfficeActivity,
 CONCAT(AddressCity,', ',AddressState,' ',AddressZip) AS AddressCSZ,
 AddressStreet1,

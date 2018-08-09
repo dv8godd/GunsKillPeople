@@ -131,10 +131,25 @@
                                         v-for="(incident, index) in shooting.incidents" 
                                         :title="incident.shootings" 
                                         :header="incident.cleanDate"
-                                        :footer="incident.address"
+                                        :footer="incident.Address"
                                         :key="index"
                                         link="#">
                                         <f7-accordion-content>
+                                            <f7-block>
+                                                <b>Total Victims: </b>{{ incident.totalVictims}}<br>
+                                                <b>Total Fatalities: </b>{{ incident.fatalities}}<br>
+                                                <br><b>Weapons: </b>{{ incident.typeOfWeapons }}<br>
+                                                <template v-if="incident.Summary != null">
+                                                    <br><b>Summary: </b>{{ incident.Summary }}<br>
+                                                </template>
+                                                <template v-if="incident.latitude != null">
+                                                    <br><f7-link 
+                                                        :href="'http://maps.apple.com/?q='+incident.latitude+','+incident.longitude"
+                                                        icon-material="map"
+                                                        external>&nbsp;View on Map</f7-link><br>
+                                                </template>
+                                            </f7-block>
+                                            <br>
                                             <f7-list>
                                                 <f7-list-item
                                                     v-for="(rep, index2) in incident.reps"
@@ -142,12 +157,10 @@
                                                     :header="'['+rep.Party+'] '+rep.Title"
                                                     :footer="rep.NRAtext"
                                                     :class="`nra-${rep.NRADonations}`"
-                                                    :link="'/rep/'+rep.contactID+'/'"
+                                                    :link="'/rep/'+rep.__pk_contact+'/'"
                                                     >
                                                     <f7-icon slot="media" material="person" :color="rep.Color"></f7-icon>
-                                                </f7-list-item>
-
-
+                                                </f7-list-item><br>
                                             </f7-list>
                                         </f7-accordion-content>
                                     </f7-list-item>                                
@@ -198,9 +211,26 @@
         <f7-page>
             <f7-navbar :title="rep.JobTitle+' '+rep.NameFirst+' '+rep.NameLast" back-link=" "></f7-navbar>
             <f7-block-title>
+                {{ rep.JobTitle }}'s Position
+            </f7-block-title>
+            <f7-block strong>
+                <template v-if="rep.PartyAffiliation != null">
+                    <b>Party Affiliation:</b> {{ rep.PartyAffiliation }}<br>
+                </template>
+                <template v-if="rep.ElectionYear != null">
+                    <b>Up For Re-Eleciton In:</b> {{ rep.ElectionYear }}<br>
+                </template>
+                <template v-if="rep.Position != null">
+                    <b>Position on Gun Reform:</b> {{ rep.Position }}<br>
+                </template>
+                <template v-if="rep.Notes != null">
+                    <br /><b>Comments:</b><br />{{ rep.Notes }}<br>
+                </template>
+            </f7-block>
+
+            <f7-block-title>
                 NRA Scorecard
             </f7-block-title>
-
             <f7-block strong>
                 <b>Accepts NRA Donations:</b> {{ rep.NRADonations }}<br>
                 <template v-if="rep.NRARating != null">
@@ -211,11 +241,14 @@
                 </template>
             </f7-block>
 
-            <template v-if="(rep.Facebook != null) || (rep.twitter != null) || (rep.Instagram != null) || (rep.Video != null)">
+            <template v-if="(rep.Website != null) || (rep.Facebook != null) || (rep.twitter != null) || (rep.Instagram != null) || (rep.Video != null)">
                 <f7-block-title>
-                    Social Media
+                    Web &amp; Social Media
                 </f7-block-title>
                 <f7-block strong>
+                    <template v-if="rep.Website != null">
+                        <f7-link icon-f7="world_fill" :href="rep.Website" target="_blank" external></f7-link>&nbsp;&nbsp;&nbsp;
+                    </template>
                     <template v-if="rep.Facebook != null">
                         <f7-link icon-f7="social_facebook_fill" :href="rep.Facebook" target="_blank" external></f7-link>&nbsp;&nbsp;&nbsp;
                     </template>
@@ -249,8 +282,9 @@
                             <br><br>
                             <f7-link 
                                 icon-f7="phone_round_fill" 
-                                :href="address.PhoneLocal" 
-                                target="_blank">&nbsp;{{ address.PhoneLocal }}</f7-link>
+                                :href="address.PhoneLink" 
+                                target="_blank"
+                                external>&nbsp;{{ address.PhoneLocal }}</f7-link>
                         </template>
                 </f7-block>
                 </f7-template>

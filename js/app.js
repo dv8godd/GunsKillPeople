@@ -10,12 +10,12 @@ const shootingsURL = 'https://gunskillpeople-dev.geekpak.com/app-server/index.ph
 Vue.component('page-rep', {
   template: '#page-rep',
   props: {
-    contactID: String
+    __pk_contact: String
   },
   data() {
     const self = this;
     const congress = self.$root.congress;
-    const thisRep = congress.reps.filter(function(rep) { return rep.contactID === self.contactID; })[0];
+    const thisRep = congress.reps.filter(function(rep) { return rep.__pk_contact === self.__pk_contact; })[0];
     return {
       rep: thisRep
     };
@@ -51,7 +51,7 @@ new Vue({
         // App routes
         routes: [
           {
-            path: '/rep/:contactID/',
+            path: '/rep/:__pk_contact/',
             component: 'page-rep'
           },
           {
