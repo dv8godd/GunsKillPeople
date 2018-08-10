@@ -2,10 +2,6 @@
 Framework7.use(Framework7Vue);
 var $$ = Dom7;
 
-const congressURL = 'https://gunskillpeople-dev.geekpak.com/app-server/index.php?func=congress';
-const shootingsURL = 'https://gunskillpeople-dev.geekpak.com/app-server/index.php?func=shootings';
-// const refreshAudio = new Audio('./refresh.mp3');
-
 // Init Page Components
 Vue.component('page-rep', {
   template: '#page-rep',
