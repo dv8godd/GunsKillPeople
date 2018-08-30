@@ -91,113 +91,244 @@
             </f7-panel>
 
             <!-- Tabbed Views Wrapper -->
-            <f7-views tabs> 
-
-                <!--
-                ###############################################
-                #                                               #
-                #  MAIN VIEW                                    #
-                #                                               #
-                ###############################################
-                -->
-
-                <f7-view main>
-                    <f7-page :page-content="false">
-                        <f7-navbar title="Guns Kill People">
-                            <!-- <f7-nav-right v-if="$theme.md">
-                                <f7-link icon-material="compare_arrows" @click="isBottom != isBottom"></f7-link>
-                            </f7-nav-right> -->
-                        </f7-navbar>
-                        <f7-toolbar tabbar scrollable :bottom-md="isBottom">
-                            <f7-link
-                                v-for="(shooting, index) in shootings"
-                                :key="shooting.year"
-                                :tab-link="`#year-${shooting.year}`"
-                                :tab-link-active="index === 0"
-                                >{{shooting.year}}</f7-link>
-                        </f7-toolbar>
-                        <f7-tabs>
-                            <f7-tab
-                                v-for="(shooting, index) in shootings"
-                                :key="shooting.year"
-                                :id="`year-${shooting.year}`"
-                                class="page-content"
-                                :tab-active="index === 0"
-                                >
-                                
-                                <f7-block-title>{{shooting.year}} Shootings</f7-block-title>
-                                <f7-list>
-                                    <f7-list-item accordion-item
-                                        v-for="(incident, index) in shooting.incidents" 
-                                        :title="incident.shootings" 
-                                        :header="incident.cleanDate"
-                                        :footer="incident.Address"
-                                        :key="index"
-                                        link="#">
-                                        <f7-accordion-content>
-                                            <f7-block>
-                                                <b>Total Victims: </b>{{ incident.totalVictims}}<br>
-                                                <b>Total Fatalities: </b>{{ incident.fatalities}}<br>
-                                                <br><b>Weapons: </b>{{ incident.typeOfWeapons }}<br>
-                                                <template v-if="incident.Summary != null">
-                                                    <br><b>Summary: </b>{{ incident.Summary }}<br>
-                                                </template>
-                                                <template v-if="incident.latitude != null">
-                                                    <br><f7-link 
-                                                        :href="'http://maps.apple.com/?q='+incident.latitude+','+incident.longitude"
-                                                        icon-material="map"
-                                                        external>&nbsp;View on Map</f7-link><br>
-                                                </template>
-                                            </f7-block>
-                                            <br>
-                                            <f7-list>
-                                                <f7-list-item
-                                                    v-for="(rep, index2) in incident.reps"
-                                                    :title="rep.NameFirst+' '+rep.NameLast"
-                                                    :header="'['+rep.Party+'] '+rep.Title"
-                                                    :footer="rep.NRAtext"
-                                                    :class="`nra-${rep.NRADonations}`"
-                                                    :link="'/rep/'+rep.__pk_contact+'/'"
-                                                    >
-                                                    <f7-icon slot="media" material="person" :color="rep.Color"></f7-icon>
-                                                </f7-list-item><br>
-                                            </f7-list>
-                                        </f7-accordion-content>
-                                    </f7-list-item>                                
-                                </f7-list>
-                            </f7-tab>
-                        </f7-tabs>
-                    </f7-page>
-                </f7-view>
-
+            <f7-views> 
+                <f7-view main url="/"></f7-view>
             </f7-views>
-
-            <!--
-             ###############################################
-            #                                               #
-            #  POPUP                                        #
-            #                                               #
-             ###############################################
-            -->
-
-            <f7-popup id="popup">
-                <f7-view>
-                <f7-page>
-                    <f7-navbar title="Welcome!">
-                    <f7-nav-right>
-                        <f7-link popup-close>Close</f7-link>
-                    </f7-nav-right>
-                    </f7-navbar>
-                    <f7-block>
-                        <h3>Welcome to The Academy Group App</h3>
-                        <p>Mauris posuere sit amet metus id venenatis. Ut ante dolor, tempor nec commodo rutrum, varius at sem. Nullam ac nisi non neque ornare pretium. Nulla mauris mauris, consequat et elementum sit amet, egestas sed orci. In hac habitasse platea dictumst.</p>
-                    </f7-block>
-                </f7-page>
-                </f7-view>
-            </f7-popup>
-
         </f7-app>
     </div>    
+
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : HOME                              #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-home">
+
+    <f7-page :page-content="false">
+        <f7-navbar title="Guns Kill People">
+            <f7-nav-right>
+                <f7-link icon-f7="info" href="/about/"></f7-link>
+            </f7-nav-right>
+        </f7-navbar>
+        <f7-toolbar tabbar>
+            <f7-link tab-link="#tab-1" tab-link-active>By Year</f7-link>
+            <f7-link tab-link="#tab-2">By State</f7-link>
+            <f7-link tab-link="#tab-3">By Venue</f7-link>
+        </f7-toolbar>
+        
+        <f7-tabs>
+            <f7-tab id="tab-1" class="page-content" tab-active>
+                <f7-block-title>
+                    Shootings by Year
+                </f7-block-title>
+                <f7-list>
+                    <f7-list-item
+                        v-for="item in filters.shootingYears"
+                        :title="item"
+                        :link="'/byYear/'+item+'/'"
+                        >
+                    </f7-list-item><br>
+                </f7-list>
+            </f7-tab>
+            <f7-tab id="tab-2" class="page-content">
+                <f7-block-title>
+                    Shootings by State
+                </f7-block-title>
+                <f7-list>
+                    <f7-list-item
+                        v-for="item in filters.shootingStates"
+                        :title="item"
+                        :link="'/byState/'+item+'/'"
+                        >
+                    </f7-list-item><br>
+                </f7-list>
+            </f7-tab>
+            <f7-tab id="tab-3" class="page-content">
+                <f7-block-title>
+                    Shootings by Venue
+                </f7-block-title>
+                <f7-list>
+                    <f7-list-item
+                        v-for="item in filters.shootingVenues"
+                        :title="item"
+                        :link="'/byVenue/'+item+'/'"
+                        >
+                    </f7-list-item><br>
+                </f7-list>
+            </f7-tab>
+        </f7-tabs>
+
+
+
+
+
+
+
+
+
+            <!-- <f7-toolbar tabbar scrollable :bottom-md="isBottom">
+                <f7-link
+                    v-for="(shooting, index) in shootings"
+                    :key="shooting.year"
+                    :tab-link="`#year-${shooting.year}`"
+                    :tab-link-active="index === 0"
+                    >{{shooting.year}}</f7-link>
+            </f7-toolbar> -->
+            <!-- <f7-tabs>
+                <f7-tab
+                    v-for="(shooting, index) in shootings"
+                    :key="shooting.year"
+                    :id="`year-${shooting.year}`"
+                    class="page-content"
+                    :tab-active="index === 0"
+                    >
+
+                    <f7-block-title>{{shooting.year}} Shootings</f7-block-title>
+                    <f7-list>
+                        <f7-list-item
+                            v-for="(incident, index) in shooting.incidents"
+                            :title="incident.shootings"
+                            :header="incident.cleanDate"
+                            :footer="incident.Address"
+                            :link="'/inc/'+shooting.year+'/'+incident.__pk_location+'/'"
+                            >
+                        </f7-list-item><br>
+
+-->
+
+        </f7-page>
+    </template>
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : BY YEAR                           #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-by-year">
+        <f7-page>
+            <f7-navbar :title="`Shootings in ${year}`" back-link=" "></f7-navbar>
+            <f7-list>
+                <f7-list-item
+                    v-for="(incident, index) in incidents"
+                    :title="incident.shootings"
+                    :header="incident.cleanDate"
+                    :footer="incident.Address"
+                    :link="'/inc/'+incident.__pk_location+'/'"
+                    >
+                </f7-list-item><br>
+            </f7-list>
+        </f7-page>
+    </template>
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : BY STATE                          #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-by-state">
+        <f7-page>
+            <f7-navbar :title="`Shootings in ${state}`" back-link=" "></f7-navbar>
+            <f7-list>
+                <f7-list-item
+                    v-for="(incident, index) in incidents"
+                    :title="incident.shootings"
+                    :header="incident.cleanDate"
+                    :footer="incident.Address"
+                    :link="'/inc/'+incident.__pk_location+'/'"
+                    >
+                </f7-list-item><br>
+            </f7-list>
+        </f7-page>
+    </template>
+
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : BY VENUE                          #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-by-venue">
+        <f7-page>
+            <f7-navbar :title="`Shootings in ${venue}`" back-link=" "></f7-navbar>
+            <f7-list>
+                <f7-list-item
+                    v-for="(incident, index) in incidents"
+                    :title="incident.shootings"
+                    :header="incident.cleanDate"
+                    :footer="incident.Address"
+                    :link="'/inc/'+incident.__pk_location+'/'"
+                    >
+                </f7-list-item><br>
+            </f7-list>
+        </f7-page>
+    </template>
+    
+    <!--
+     ###############################################
+    #                                               #
+    #  TEMPLATE : INC PAGE                          #
+    #                                               #
+     ###############################################
+    -->
+
+    <template id="page-inc">
+        <f7-page>
+            <f7-navbar :title="inc.shootings" back-link=" "></f7-navbar>
+            <f7-block strong>
+                <template v-if="inc.cleanDate != null">
+                    <b>Date:</b> {{ inc.cleanDate }}<br>
+                </template>
+                <template v-if="inc.Address != null">
+                    <b>Where:</b> {{ inc.Address }}<br>
+                </template>
+                <template v-if="inc.totalVictims != null">
+                    <br /><b>Total Victims:</b> {{ inc.totalVictims }}<br>
+                </template>
+                <template v-if="inc.fatalities != null">
+                    <b>Total Fatalities:</b> {{ inc.fatalities }}<br>
+                </template>
+                <template v-if="inc.typeOfWeapons != null">
+                    <b>Weapons:</b> {{ inc.typeOfWeapons }}<br>
+                </template>
+                <template v-if="inc.Summary != null">
+                    <br /><b>Summary:</b><br />{{ inc.Summary }}<br>
+                </template>
+                <template v-if="inc.latitude != null">
+                    <br><f7-link 
+                        :href="'http://maps.apple.com/?q='+inc.latitude+','+inc.longitude"
+                        icon-material="map"
+                        external>&nbsp;View on Map</f7-link><br>
+                </template>
+            </f7-block>
+            <f7-block-title>
+                Congressional Representation
+            </f7-block-title>
+            <f7-list>
+                <f7-list-item
+                    v-for="(rep, index2) in inc.reps"
+                    :title="rep.NameFirst+' '+rep.NameLast"
+                    :header="'['+rep.Party+'] '+rep.Title"
+                    :footer="rep.NRAtext"
+                    :class="`nra-${rep.NRADonations}`"
+                    :link="'/rep/'+rep.__pk_contact+'/'"
+                    >
+                    <f7-icon slot="media" material="person" :color="rep.Color"></f7-icon>
+                </f7-list-item><br>
+            </f7-list>
+        </f7-page>
+    </template>
 
     <!--
      ###############################################
@@ -290,7 +421,7 @@
                 </f7-template>
 
             </f7-list>
-    </f7-page>
+        </f7-page>
     </template>
 
     <!--
@@ -310,35 +441,9 @@
                 <p>Mauris posuere sit amet metus id venenatis. Ut ante dolor, tempor nec commodo rutrum, varius at sem. Nullam ac nisi non neque ornare pretium. Nulla mauris mauris, consequat et elementum sit amet, egestas sed orci. In hac habitasse platea dictumst.</p>
                 <p>Fusce eros lectus, accumsan eget mi vel, iaculis tincidunt felis. Nulla tincidunt pharetra sagittis. Fusce in felis eros. Nulla sit amet aliquam lorem, et gravida ipsum. Mauris consectetur nisl non sollicitudin tristique. Praesent vitae metus ac quam rhoncus mattis vel et nisi. Aenean aliquet, felis quis dignissim iaculis, lectus quam tincidunt ligula, et venenatis turpis risus sed lorem. Morbi eu metus elit. Ut vel diam dolor.</p>
             </f7-block>
- x            </f7-page>
-    </template>
-
-
-    <!--
-     ###############################################
-    #                                               #
-    #  TEMPLATE : FORM PAGE                         #
-    #                                               #
-     ###############################################
-    -->
-
-    <template id="page-form">
-        <f7-page>
         </f7-page>
     </template>
 
-    <!--
-     ###############################################
-    #                                               #
-    #  TEMPLATE : DYNAMIC ROUTING PAGE              #
-    #                                               #
-     ###############################################
-    -->
-
-    <template id="page-dynamic-routing">
-        <f7-page>
-        </f7-page>
-    </template>
 
     <!--
      ###############################################
