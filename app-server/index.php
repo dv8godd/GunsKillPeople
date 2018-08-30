@@ -55,7 +55,6 @@ SELECT
 year
 FROM
 SQLShootings
-WHERE year >= YEAR(NOW()) - 3
 GROUP BY year
 ORDER BY year DESC
 EOF;
@@ -294,6 +293,116 @@ EOF;
 
     }
 
+
+
+
+
+
+
+/*
+   #########################################################################################
+  #                                                                                         #
+  #                                                                                         #
+  #                                     SHOOTINGS (ALT)                                     #
+  #                                                                                         #
+  #                                                                                         #
+   #########################################################################################
+*/
+
+} elseif ($func == 'shootingsalt') {
+
+    // Set the query with Heredoc (<<<EOF to EOF;) syntax
+    $sql = <<<EOF
+SELECT
+__pk_location,
+shootings,
+DATE_FORMAT(date, '%b %D, %Y') as cleanDate,
+Address,
+Summary,
+fatalities,
+totalVictims,
+typeOfWeapons,
+latitude,
+longitude,
+venue,
+state,
+year
+FROM
+SQLShootings
+WHERE Address IS NOT NULL
+ORDER BY date DESC
+EOF;
+
+    // Run query
+    $result = $conn->query($sql);
+
+    // Is the data available?
+    if ($result->num_rows > 0) {
+
+        // Loop through each row...
+        while($r = mysqli_fetch_assoc($result)) {
+
+            // and push its data to the dataset
+            $dataset['incidents'][] = $r;
+        }
+
+        // Now we need to run a sub-query on each row
+        foreach ($dataset['incidents'] as $key => $rowData) {
+
+            // grab the classID for the sub-query
+            $thisLocation = $rowData['__pk_location'];
+
+            // Setting the sub-query with Heredoc (<<<EOF to EOF;) syntax
+            $sql = <<<EOF
+
+SELECT
+c.__pk_contact,
+c.NameFirst,
+c.NameLast,
+c.Party,
+CASE
+WHEN (c.Party = "R") THEN 'red'
+WHEN (c.Party = "D") THEN 'blue'
+END AS Color,
+c.Title,
+c.NRADonations,
+FORMAT(c.SumNRA,0) AS SumNRA,
+CASE 
+WHEN (c.NRADonations = 'Yes') THEN CONCAT('Received $',FORMAT(c.SumNRA,0),' in donations from the NRA')
+ELSE 'No NRA donations'
+END AS NRAtext
+FROM
+SQLContacts c
+LEFT JOIN SQLjoinConSho j ON j._fk_contact=c.__pk_contact
+WHERE j._fk_location = '{$thisLocation}'
+ORDER BY c.Title DESC, c.NameLast ASC, c.NameFirst ASC
+EOF;
+
+            // Run query
+            $result = $conn->query($sql);
+
+            // Is the data available?
+            if ($result->num_rows > 0) {
+
+                // Loop through each row...
+                while($r = mysqli_fetch_assoc($result)) {
+
+                    // and push its data to the dataset for this row
+                    $dataset['incidents'][$key]['reps'][] = $r;
+                }
+            } else {
+
+                $dataset['incidents'][$key]['reps'] = [];
+            }
+            
+        }
+    // The result isn't available
+    } else {
+
+        // The dataset becomes empty for delivery
+        $dataset['incidents'] = [];
+
+    }
 
 
 
