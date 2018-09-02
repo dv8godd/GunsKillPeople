@@ -3,6 +3,15 @@ Framework7.use(Framework7Vue);
 var $$ = Dom7;
 
 // Init Page Components
+Vue.component('page-tabs', {
+  template: '#page-tabs',
+  data() {
+    const self = this;
+    const filters = self.$root.filters;
+    return { filters };
+  }
+});
+
 Vue.component('page-home', {
   template: '#page-home',
   data() {
@@ -90,9 +99,18 @@ Vue.component('page-by-venue', {
 Vue.component('page-about', {
   template: '#page-about',
   data() {
-	const self = this;
+	  const self = this;
     const reference = self.$root.reference;
     return { reference };
+  }
+});
+
+Vue.component('page-search', {
+  template: '#page-search',
+  data() {
+    const self = this;
+    const incidents = self.$root.shootings.incidents;
+    return { incidents };
   }
 });
 
@@ -122,6 +140,24 @@ new Vue({
             component: 'page-home',
           },
           {
+            path: '/tabs/',
+            component: 'page-home',
+            tabs: [
+              {
+                path: '/byYear/',
+                id: 'tab-1'
+              },
+              {
+                path: '/byState/',
+                id: 'tab-2'
+              },
+              {
+                path: '/byVenue/',
+                id: 'tab-3'
+              }
+            ]
+          },
+          {
             path: '/byYear/:year/',
             component: 'page-by-year'
           },
@@ -134,36 +170,16 @@ new Vue({
             component: 'page-by-venue'
           },
           {
+            path: '/search/',
+            component: 'page-search'
+          },
+          {
             path: '/rep/:__pk_contact/',
             component: 'page-rep'
           },
           {
             path: '/inc/:__pk_location/',
             component: 'page-inc'
-          },
-          {
-            path: '/devnotes/',
-            content: `
-              <div class="page">
-                <div class="navbar">
-                  <div class="navbar-inner sliding">
-                    <div class="left">
-                      <a href="#" class="link back">
-                        <i class="icon icon-back"></i>
-                        <span class="ios-only">Back</span>
-                      </a>
-                    </div>
-                    <div class="title">Dev Notes</div>
-                  </div>
-                </div>
-                <div class="page-content">
-                  <div class="card">
-                    <div class="card-header">xxxxx</div>
-                    <div class="card-content card-content-padding">xxxxx</div>
-                  </div>
-                </div>
-              </div> 
-           `
           },
           {
             path: '/about/',
@@ -223,6 +239,7 @@ new Vue({
   mounted: function() {
     const self = this;
     const app = self.$f7;
+    // app.router.navigate("/tabs/byYear/");
     app.request.json(congressURL, function (data) {
       self.congress = data;
     });

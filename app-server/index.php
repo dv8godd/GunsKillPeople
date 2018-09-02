@@ -452,6 +452,50 @@ EOF;
 
 
 
+/*
+   #########################################################################################
+  #                                                                                         #
+  #                                                                                         #
+  #                                        Metadata                                         #
+  #                                                                                         #
+  #                                                                                         #
+   #########################################################################################
+*/
+
+} elseif ($func == 'meta') {
+
+    $sql = <<<EOF
+SELECT
+name, content
+FROM
+SQLMeta
+EOF;
+  
+    // Run query
+    $result = $conn->query($sql);
+
+    // Is the data available?
+    if ($result->num_rows > 0) {
+
+        // Loop through each row...
+        while($r = mysqli_fetch_assoc($result)) {
+
+            // and push its data to the dataset
+            $dataset[] = $r;
+        }
+
+        // Now we need to run a sub-query on each row
+    }  else {
+
+        // The dataset becomes empty for delivery
+        $dataset = [];
+
+    }
+  
+
+
+
+
 }
 
 // we should have a dataset object/array of some variety now...
