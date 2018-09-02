@@ -409,13 +409,47 @@ EOF;
 
 
 
+/*
+   #########################################################################################
+  #                                                                                         #
+  #                                                                                         #
+  #                                        References                                       #
+  #                                                                                         #
+  #                                                                                         #
+   #########################################################################################
+*/
 
+} elseif ($func == 'ref') {
 
-
-
-
-
-
+    $sql = <<<EOF
+  SELECT
+  OrganizationName,website,Notes,priority
+  FROM
+  SQLRef
+  ORDER BY priority ASC
+  EOF;
+  
+      // Run query
+      $result = $conn->query($sql);
+  
+      // Is the data available?
+      if ($result->num_rows > 0) {
+  
+          // Loop through each row...
+          while($r = mysqli_fetch_assoc($result)) {
+  
+              // and push its data to the dataset
+              $dataset['ref'][] = $r;
+          }
+  
+          // Now we need to run a sub-query on each row
+       }  else {
+  
+          // The dataset becomes empty for delivery
+          $dataset['ref'] = [];
+  
+      }
+  
 
 
 }

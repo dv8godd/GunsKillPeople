@@ -88,7 +88,12 @@ Vue.component('page-by-venue', {
 });
 
 Vue.component('page-about', {
-  template: '#page-about'
+  template: '#page-about',
+  data() {
+	const self = this;
+    const reference = self.$root.reference;
+    return { reference };
+  }
 });
 
 Vue.component('page-not-found', {
@@ -165,18 +170,6 @@ new Vue({
             component: 'page-about'
           },
           {
-            path: '/academy/',
-            component: 'page-academy'
-          },
-          {
-            path: '/form/',
-            component: 'page-form'
-          },
-          {
-            path: '/dynamic-route/blog/:blogId/post/:postId/',
-            component: 'page-dynamic-routing'
-          },
-          {
             path: '(.*)',
             component: 'page-not-found',
           },
@@ -188,10 +181,13 @@ new Vue({
       congress: {
         reps: []
       },
+      reference: {
+	      ref:[]
+      },
       filters: {
         shootingYears: [],
         shootingVenues: [],
-        shootingStates: []
+        shootingStates: [],
       },
       isBottom: false,
     };
@@ -229,6 +225,9 @@ new Vue({
     const app = self.$f7;
     app.request.json(congressURL, function (data) {
       self.congress = data;
+    });
+    app.request.json(refURL, function (data) {
+      self.reference = data;
     });
     app.request.json(shootingsURL, function (data) {
       self.shootings = data;
