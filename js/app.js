@@ -155,7 +155,23 @@ new Vue({
                 path: '/byVenue/',
                 id: 'tab-3'
               }
-            ]
+            ],
+            beforeEnter(to, from, next) {
+              if (to.path == '/tabs/byYear/') {
+                document.getElementById('tb2').classList.remove('tab-link-active');
+                document.getElementById('tb3').classList.remove('tab-link-active');
+                document.getElementById('tb1').classList.add('tab-link-active');
+              } else if (to.path == '/tabs/byState/') {
+                document.getElementById('tb1').classList.remove('tab-link-active');
+                document.getElementById('tb3').classList.remove('tab-link-active');
+                document.getElementById('tb2').classList.add('tab-link-active');
+              } else if (to.path == '/tabs/byVenue/') {
+                document.getElementById('tb1').classList.remove('tab-link-active');
+                document.getElementById('tb2').classList.remove('tab-link-active');
+                document.getElementById('tb3').classList.add('tab-link-active');
+              }
+              next();
+            }
           },
           {
             path: '/byYear/:year/',
