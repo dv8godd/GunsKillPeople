@@ -33,6 +33,20 @@
 
 /*
 ######################################
+#  ACCORDION FIX
+######################################
+*/
+
+.accordion-item-content .block .block-fix
+{
+  border-width: 0 0 1px 0;
+  border-style: solid;
+  border-color: #C8C7CC;
+}
+
+
+/*
+######################################
 #  NAVBAR / HEADER
 ######################################
 */
