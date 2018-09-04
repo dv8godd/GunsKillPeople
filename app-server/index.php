@@ -250,8 +250,7 @@ EOF;
 
             // Setting the sub-query with Heredoc (<<<EOF to EOF;) syntax
             $sql = <<<EOF
-
-SELECT 
+SELECT
 LocationSite,
 PhoneLocal,
 CONCAT('tel:+1',TRIM(REPLACE(REPLACE(REPLACE(REPLACE(PhoneLocal,'(',''),'-',''),')',''),' ',''))) AS PhoneLink,
@@ -264,7 +263,7 @@ AddressState,
 AddressZip
 FROM SQLAddress
 WHERE _fk_contact='{$thisRepID}' 
-ORDER BY LocationSite ASC
+ORDER BY FIELD(LocationSite,'Washington','Washington Office') DESC, LocationSite ASC
 EOF;
 
             // Run query
